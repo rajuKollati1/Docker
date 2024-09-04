@@ -1,0 +1,64 @@
+To install Docker on a Linux machine, follow these steps. This guide is for Ubuntu/Debian-based distributions, but I can provide instructions for other distributions if needed.
+
+1. Update Your System
+First, update your existing list of packages:
+
+bash
+Copy code
+sudo apt-get update
+2. Install Prerequisites
+Install necessary packages to allow apt to use a repository over HTTPS:
+
+bash
+Copy code
+sudo apt-get install \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
+3. Add Docker’s Official GPG Key
+Add Docker’s official GPG key:
+
+bash
+Copy code
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+4. Set Up the Docker Repository
+Add the Docker repository to your system:
+
+bash
+Copy code
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+5. Install Docker Engine
+Update the package index and install Docker Engine:
+
+bash
+Copy code
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+6. Verify Docker Installation
+Verify that Docker is installed correctly by running:
+
+bash
+Copy code
+sudo docker --version
+7. Run Docker as a Non-Root User (Optional)
+If you want to run Docker without sudo, add your user to the docker group:
+
+bash
+Copy code
+sudo usermod -aG docker $USER
+Log out and back in for this to take effect, or run:
+
+bash
+Copy code
+newgrp docker
+8. Test Docker Installation
+Run the following command to check if Docker is working properly:
+
+bash
+Copy code
+docker run hello-world
+This will download a test image and run it in a container. If Docker is installed correctly, you'll see a message that confirms the installation.
